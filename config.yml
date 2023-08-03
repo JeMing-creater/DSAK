@@ -1,0 +1,75 @@
+trainer:
+  num_epochs: 100
+  warmup: 2
+  img_size: 32
+#  batch_size: 256
+  batch_size: 128
+  seed: 50
+  gan_latent_dim: 1000
+  train_ratio: 0.8
+  lr: 0.001
+#  min_lr: 0.000001
+  min_lr: 0.0000001
+  optimizer: adamw
+  weight_decay: 0.05
+  weight_decay_end: 0.04
+  num_workers: 16
+  resume: False
+  log_level: INFO
+
+defence:
+  momentum_teacher: 0.996  # EMA参数转移上限
+  ema_epoch: 4 # 每多少轮更新一遍教师模型
+  target_lr: 0.0001
+  teacher_lr: 0.0001
+  generator_lr: 0.0001 # 生成模型学习率
+  generator_altho1: 1  # 训练标签保持权重
+  generator_altho2: 10  # 训练数据远离权重
+  target_altho: 1   # 对蒸馏权重
+  defence_epochs: 100  # 训练轮次
+  alpka: 0.5
+
+finetune:
+#  model: DesNet
+  model: AlexNet
+#  checkpoint: DesNet_CIFAR100
+  checkpoint: AlexNet_CIFAR100
+#  migration_checkpoint: AlexNet_CIFAR100
+#  model: Linear_5
+#  checkpoint: Linear_5_Texas100
+#  model: Linear_4
+#  checkpoint: Linear_4_Purchase100
+
+preprocess:
+  preprocess: True  # true重新划分数据集
+  dataset: CIFAR100
+#  dataset: Texas100
+#  dataset: Purchase100
+  datapath: datasets/
+  dataloadpath: datasets/Preprocessed/
+  # ciar 100
+  train_cluster: 25000  # 目标数据集训练集数据量
+  test_cluster: 5000   # 测试数据量，敌手和我方都用这么多
+  attack_cluster: 25000  # 敌手数据集训练集数据量
+
+  # Texas100
+#  train_cluster: 10000  # 目标数据集训练集数据量
+#  test_cluster: 5000   # 测试数据量，敌手和我方都用这么多
+#  attack_cluster: 10000  # 敌手数据集训练集数据量
+
+  # pur100
+#  train_cluster: 10000  # 目标数据集训练集数据量
+#  test_cluster: 10000   # 测试数据量，敌手和我方都用这么多
+#  attack_cluster: 10000  # 敌手数据集训练集数据量
+
+  traintest_radio: 0.2
+  cross: False  # 决定数据是否交叉
+
+model:
+  in_channels: 3
+  num_classes: 100
+
+  # texas100
+#  in_features: 6169
+ # pur100
+#  in_features: 600
